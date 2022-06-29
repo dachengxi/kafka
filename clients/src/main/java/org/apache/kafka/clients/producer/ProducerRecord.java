@@ -45,14 +45,40 @@ import java.util.Objects;
  * <p>
  * In either of the cases above, the timestamp that has actually been used will be returned to user in
  * {@link RecordMetadata}
+ *
+ * 发送消息的消息对象
  */
 public class ProducerRecord<K, V> {
 
+    /**
+     * 主题
+     */
     private final String topic;
+
+    /**
+     * 分区
+     */
     private final Integer partition;
+
+    /**
+     * 消息头部，用来设置一些与应用相关的信息
+     */
     private final Headers headers;
+
+    /**
+     * 消息的键，可以用来计算分区号，进而可以让消息发往特定的分区，key可以在topic的基础上进行二次归类，同一个key的消息会被划分到同一分区中，
+     * 有key的消息还支持日志压缩功能
+     */
     private final K key;
+
+    /**
+     * 消息体，一般不为空，为空则表示特定的消息：墓碑消息
+     */
     private final V value;
+
+    /**
+     * 消息的时间戳，有CreateTime消息创建时间和LogAppendTime消息追加到日志文件的时间两种类型
+     */
     private final Long timestamp;
 
     /**
